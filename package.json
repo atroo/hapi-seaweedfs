@@ -1,0 +1,17 @@
+{
+  "name": "hapi-weedfs",
+  "version": "0.0.0",
+  "main": "module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "peerDependencies": {
+    "hapi": "^7.0.0"
+  },
+  "dependencies": {
+    "weed-fs": "^0.1.4-a"
+  }
+}
