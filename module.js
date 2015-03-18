@@ -1,30 +1,68 @@
 var weedClient = require("weed-fs");
 var stream = require("stream");
+var Promise = require("promise");
 
 var weedfs;
 
 exports.register = function (plugin, options, next) {
+    var initErr;
+    
+    var spec = joi.object().keys({
+        server: joi.string().required(),
+        port: joi.number().integer().min(1).max(70000)
+    });
+    
+    spec.validate(options, function(err, value) { 
+        if(err) {
+            initErr = err;
+        }
+    });
+    
+    
     weedfs = new weedClient({
         server:     options.host,
         port:       options.port
     });
     
-    var write = function (file, opts, callback) {
-        weedfs.write(file, opts, callback);
+    var write = function (file, opts) {
+        return new Promise(function(onResolve, onReject) {
+            weedfs.write(file, opts, function(err, finfo)  {
+                if(err) {
+                    return onReject(err);
+                }
+                
+                onResolve(finfo);
+            });
+            
+        });
     };
     
     var read = function (fileId, callback) {
-        weedfs.read(fileId, callback);
+        return new Promise(function(onResolve, onReject) {
+            weedfs.read(fileId, function(err, response, body)  {
+                if(err) {
+                    return onReject(err);
+                }
+                
+                onResolve({
+                    response: response,
+                    body: body
+                });
+            });
+            
+        });
     };
     
-    var status = function(callback) {
-        weedfs.systemStatus(function(err, status) {
-            if(err) {
-                callback(new Error("Could not retrieve system state"), null);
-            }
-            else {
-                callback(null, status);
-            }
+    var status = function() {
+        return new Promise(function(onResolve, onReject) {
+            weedfs.systemStatus(fileId, function(err, status)  {
+                if(err) {
+                    return onReject(err);
+                }
+                
+                onResolve(status);
+            });
+            
         });
     };
     
@@ -32,7 +70,7 @@ exports.register = function (plugin, options, next) {
     plugin.method("weed.read", read);
     plugin.method("weed.systemStatus", status);
     
-    next();
+    next(initErr);
 };
 
 exports.register.attributes = {
