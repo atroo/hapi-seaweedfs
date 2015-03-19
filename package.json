@@ -1,6 +1,6 @@
 {
   "name": "atroo-hapi-weedfs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "module.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,7 @@
     "hapi": "^8.0.0"
   },
   "dependencies": {
+    "joi": "^6.0.8",
     "promise": "^6.1.0",
     "weed-fs": "^0.1.4-a"
   }

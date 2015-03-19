@@ -1,6 +1,7 @@
 var weedClient = require("weed-fs");
 var stream = require("stream");
 var Promise = require("promise");
+var joi = require("joi");
 
 var weedfs;
 
@@ -17,7 +18,6 @@ exports.register = function (plugin, options, next) {
             initErr = err;
         }
     });
-    
     
     weedfs = new weedClient({
         server:     options.host,
