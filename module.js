@@ -26,6 +26,7 @@ exports.register = function (plugin, options, next) {
     
     var write = function (file, opts) {
         return new Promise(function(onResolve, onReject) {
+            opts = opts || {};
             weedfs.write(file, opts, function(err, finfo)  {
                 if(err) {
                     return onReject(err);
@@ -55,7 +56,7 @@ exports.register = function (plugin, options, next) {
     
     var status = function() {
         return new Promise(function(onResolve, onReject) {
-            weedfs.systemStatus(fileId, function(err, status)  {
+            weedfs.systemStatus(function(err, status)  {
                 if(err) {
                     return onReject(err);
                 }
