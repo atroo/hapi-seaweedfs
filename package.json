@@ -1,19 +1,32 @@
 {
-  "name": "atroo-hapi-weedfs",
-  "version": "0.0.5",
-  "main": "module.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {},
-  "peerDependencies": {
-    "hapi": "^8.0.0"
-  },
-  "dependencies": {
-    "joi": "^6.0.8",
-    "promise": "^6.1.0",
-    "weed-fs": "^0.1.4-a"
-  }
+    "name": "hapi-seaweedfs",
+    "version": "0.1.0",
+    "main": "src/plugin.js",
+    "description": "Hapi plugin to provide communication with a seaweedfs infrastructure via node-seaweedfs driver",
+    "scripts": {
+        "test": "gulp"
+    },
+    "author": "atroo GbR",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/atroo/hapi-weedfs"
+    },
+    "devDependencies": {
+        "chai": "^3.2.0",
+        "gulp": "^3.9.0",
+        "gulp-mocha": "^2.1.3",
+        "gulp-plumber": "^1.0.1",
+        "gulp-util": "^3.0.6",
+        "hapi": "^8.8.1",
+        "hapi-intercom": "^1.1.0"
+    },
+    "peerDependencies": {
+        "hapi": "^8.0.0",
+        "hapi-intercom": "^1.1.0"
+    },
+    "dependencies": {
+        "joi": "^6.0.8",
+        "node-seaweedfs": "^1.0.1"
+    }
 }
