@@ -1,6 +1,5 @@
 var weedClient = require("node-seaweedfs");
 var stream = require("stream");
-var Promise = require("promise");
 var joi = require("joi");
 
 var weedfs;
@@ -11,6 +10,7 @@ exports.register = function (server, options, next) {
     var spec = joi.object().keys({
         host: joi.string().required(),
         port: joi.number().integer().min(1).max(70000),
+        usePublicUrl: joi.boolean().optional().description("wether to use the url or publicUrl to read and write data from seaweedFS"),
         status: joi.object().optional().keys({
             enable: joi.boolean().description("enables fetching of status information from master server and triggers an intercom event"),
             fetchInterval: joi.number().integer().min(1000).max(1000 * 60 * 60 * 24).description("the interval between status fetches, minimum is 1 second, maximum 1 day"),
@@ -26,7 +26,8 @@ exports.register = function (server, options, next) {
     
     weedfs = new weedClient({
         server:     options.host,
-        port:       options.port
+        port:       options.port,
+        usePublicUrl: options.usePublicUrl || true
     });    
     
     server.dependency("hapi-intercom", function (server, next) {
