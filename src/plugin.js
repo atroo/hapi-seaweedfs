@@ -24,6 +24,10 @@ exports.register = function (server, options, next) {
         }
     });
     
+	if(initErr) {
+		return next(initErr);
+	}
+	
     weedfs = new weedClient({
         server:     options.host,
         port:       options.port,
@@ -51,7 +55,7 @@ exports.register = function (server, options, next) {
         });
         
         if(options.status && options.status.enable) {
-            var interval = options.status.fetchInterval || (1000 * 15);
+            var interval = options.status.fetchInterval || (1000 * 30 * 60);
             var t = setInterval(function() {
                 weedfs.systemStatus().then(function(res) {
                     chan.emit("systemStatus", res);
@@ -65,11 +69,29 @@ exports.register = function (server, options, next) {
                 clearInterval(t);
             });
         }
+		
+		/*if(options.infrastructureStatus && options.infrastructureStatus.enable) {
+            var interval = options.status.fetchInterval || (1000 * 60 * 60);
+            var t = setInterval(function() {
+                weedfs.systemStatus().then(function(res) {
+					
+					res.Topology && res.Topology.DataCenters.length
+                    chan.emit("systemStatus", res);
+                    if(options.status.goodLogTags) {
+                        server.log(["seaweedfs"].concat(options.status.goodLogTags), res);
+                    }
+                });
+            }, interval);
+            t.unref();
+            server.on("stop", function() {
+                clearInterval(t);
+            });
+        }*/
         
         next();
     });
     
-    next(initErr);
+    next();
 };
 
 exports.register.attributes = {

@@ -1,6 +1,6 @@
 {
     "name": "hapi-seaweedfs",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "main": "src/plugin.js",
     "description": "Hapi plugin to provide communication with a seaweedfs infrastructure via node-seaweedfs driver",
     "scripts": {
@@ -27,6 +27,6 @@
     },
     "dependencies": {
         "joi": "^6.0.8",
-        "node-seaweedfs": "^1.0.1"
+        "node-seaweedfs": "^1.2.0"
     }
 }
